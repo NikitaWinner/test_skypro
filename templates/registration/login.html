@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'includes/messages.html' %}
+  <div class="text-center">
+      <div class="container-lg content-container mb-5">
+    <h2>Вход пользователя</h2>
+    {% load crispy_forms_tags %}
+    <div class="mb-5"> <!-- Добавляем контейнер с отступом снизу -->
+      <form method="POST" action="{% url 'authentication_app:login' %}" class="mx-auto col-md-6">
+          {% csrf_token %}
+          {{ form|crispy }}
+          <br>
+          <p>
+              <button type="submit" class="btn btn-primary btn-block">Войти</button>
+          </p>
+      </form>
+    </div> <!-- Закрываем контейнер с отступом снизу -->
+    <div class="row justify-content-between">
+      <div class="col">
+        <a href="{% url 'authentication_app:register' %}" class="btn btn-outline-primary btn-sm"><small>Регистрация</small></a>
+      </div>
+      <div class="col">
+        <a href="#" class="btn btn-outline-primary btn-sm"><small>Забыли пароль?</small></a>
+      </div>
+    </div>
+  </div>
+  </div>
+  <script>
+    $(document).ready(function () {
+
+      {% if messages %}
+      // Toasts
+      $(".toast").toast({ delay: 4000 });
+      $(".toast").toast("show");
+      {% endif %}
+
+    });
+  </script>
+{% endblock content %}
