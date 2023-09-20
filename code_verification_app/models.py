@@ -1,6 +1,7 @@
 from django.db import models
 from file_upload_app.models import UploadedFile
 
+
 class CodeCheck(models.Model):
     """
     Model to store information about code checks for files.
@@ -15,6 +16,7 @@ class CodeCheck(models.Model):
     Methods:
         __str__: Returns a string representation of the object.
     """
+
     class Status(models.TextChoices):
         """
         Class to define possible check statuses.

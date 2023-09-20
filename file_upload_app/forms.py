@@ -35,7 +35,7 @@ class UploadedFileForm(forms.ModelForm):
         self.helper.form_class = 'form-horizontal'
         self.helper.label_class = 'col-lg-2'
         self.helper.field_class = 'col-lg-10'
-        self.helper.add_input(Submit('submit', 'Upload', css_class='btn btn-primary'))
+        self.helper.add_input(Submit('submit', 'Загрузить', css_class='btn btn-primary'))
 
 
 class OverwriteFileForm(forms.ModelForm):

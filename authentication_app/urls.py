@@ -1,12 +1,12 @@
 from django.urls import path
-from typing import Type, List, Path
+from typing import Type, List, Any
 
 from authentication_app import views
 from authentication_app.apps import AuthenticationAppConfig
 
 app_name = AuthenticationAppConfig.name
 
-urlpatterns: List[Type[Path]] = [
+urlpatterns: List[Type[Any]] = [
     # Home View
     path("", views.HomeView.as_view(), name="home"),
 

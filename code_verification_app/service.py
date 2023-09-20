@@ -4,7 +4,7 @@ import os
 from django.utils import timezone
 from code_verification_app.models import CodeCheck
 from file_upload_app.models import UploadedFile
-from typing import Any, Dict, Union, List, Tuple
+from typing import Dict, Union, List
 
 
 class CodeCheckerFlake:

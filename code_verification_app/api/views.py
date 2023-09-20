@@ -1,9 +1,9 @@
-from typing import Union
 from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from file_upload_app.models import UploadedFile
 from code_verification_app.tasks import run_code_check
+
 
 class RecheckFileView(APIView):
     """

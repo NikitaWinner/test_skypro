@@ -5,6 +5,7 @@ from file_upload_app.models import UploadedFile
 from .service import CodeCheckerFlake
 from email_notification_app.tasks import send_notification_email
 
+
 @shared_task
 def run_code_check() -> None:
     """

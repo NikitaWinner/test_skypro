@@ -8,7 +8,6 @@ from django.views.generic import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from .models import UploadedFile
 from .forms import UploadedFileForm, OverwriteFileForm
-from code_verification_app.service import CodeCheckerFlake
 
 
 @method_decorator(login_required, name='dispatch')

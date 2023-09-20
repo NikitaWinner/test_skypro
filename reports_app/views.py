@@ -1,5 +1,3 @@
-import json
-
 from django.views.generic import ListView
 from code_verification_app.models import CodeCheck
 
