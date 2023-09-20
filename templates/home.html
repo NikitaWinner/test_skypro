@@ -1,11 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="jumbotron">
-        <h1 class="display-4">Добро пожаловать!</h1>
-        <p class="lead">Это домашняя страница.</p>
-        <hr class="my-4">
-        <p>Вы можете зарегистрироваться или войти в систему, чтобы начать работу.</p>
+    <div class="jumbotron text-center">
+        <div class="container">
+            <h1 class="display-4">Добро пожаловать в сервис проверки Python кода!</h1>
+            <p class="lead">Мы рады приветствовать вас в нашем удивительном мире кода и разработки.</p>
+            <hr class="my-4">
+            {% if not user.is_authenticated %}
+            <p>Если вы здесь впервые, вы можете <a href="{% url 'authentication_app:register' %}" class="btn btn-success">зарегистрироваться</a> и начать пользоваться всеми нашими возможностями.</p>
+            <p>Если у вас уже есть аккаунт, просто <a href="{% url 'authentication_app:login' %}" class="btn btn-primary">войдите</a>.</p>
+            {% else %}
+            <p>Спасибо, что выбрали нас для проверки вашего Python кода! Теперь вы можете загружать свои проекты, проверять их на соответствие стандартам и получать отчеты о качестве вашего кода.</p>
+            <p>Мы упростим вашу разработку и поможем вам создавать лучший код.</p>
+            {% endif %}
+        </div>
     </div>
-
 {% endblock %}

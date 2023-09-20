@@ -13,12 +13,12 @@ from authentication_app.forms import CustomAuthenticationForm
 
 class HomeView(TemplateView):
     """
-    Представление для отображения домашней страницы.
+    View for displaying the home page.
 
-    Отображает домашнюю страницу для пользователей.
+    Displays the home page for users.
 
     Attributes:
-        template_name (str): Имя шаблона для отображения.
+        template_name (str): The name of the template to be displayed.
 
     """
     template_name = 'home.html'
@@ -26,16 +26,15 @@ class HomeView(TemplateView):
 
 class CustomLoginView(LoginView):
     """
-    Пользовательское представление для входа (логина) пользователя.
+    Custom view for user login.
 
-    Отображает форму входа (логина) для пользователей с расширенной
-    аутентификацией через email и пароль.
+    Displays the login form for users with extended authentication via email and password.
 
     Attributes:
-        form_class (Form): Класс формы входа пользователя.
+        form_class (Form): The class of the user login form.
 
     Methods:
-        form_valid(self, form): Обрабатывает успешную аутентификацию пользователя.
+        form_valid(self, form): Handles successful user authentication.
 
     """
     form_class = CustomAuthenticationForm
@@ -56,9 +55,9 @@ class CustomLoginView(LoginView):
 
 class CustomLogoutView(LogoutView):
     """
-    Пользовательское представление для выхода (логаута) пользователя.
+    Custom view for user logout.
 
-    Выполняет выход пользователя и отображает сообщение об успешном выходе.
+    Logs out the user and displays a message about successful logout.
 
     """
 
@@ -69,17 +68,17 @@ class CustomLogoutView(LogoutView):
 
 class RegisterView(CreateView):
     """
-    Пользовательское представление для регистрации нового пользователя.
+    Custom view for registering a new user.
 
-    Отображает форму регистрации и, при успешной регистрации,
-    выполняет автоматический вход пользователя.
+    Displays the registration form and, upon successful registration,
+    automatically logs in the user.
 
     Attributes:
-        model (Model): Модель пользователя, используемая в проекте.
-        form_class (Form): Класс формы регистрации пользователя.
+        model (Model): The user model used in the project.
+        form_class (Form): The class of the user registration form.
 
     Methods:
-        form_valid(self, form): Обрабатывает успешную регистрацию пользователя.
+        form_valid(self, form): Handles successful user registration.
 
     """
     model = get_user_model()
@@ -94,17 +93,17 @@ class RegisterView(CreateView):
 
 class ProfileEditView(UserPassesTestMixin, UpdateView):
     """
-    Пользовательское представление для редактирования профиля пользователя.
+    Custom view for editing a user's profile.
 
-    Позволяет пользователям редактировать свой профиль.
+    Allows users to edit their profile.
 
     Attributes:
-        model (Model): Модель пользователя, используемая в проекте.
-        form_class (Form): Класс формы редактирования профиля.
+        model (Model): The user model used in the project.
+        form_class (Form): The class of the profile editing form.
 
     Methods:
-        test_func(self): Проверяет, имеет ли текущий пользователь доступ к редактированию профиля.
-        get_success_url(self): Возвращает URL-адрес для перенаправления после успешного редактирования профиля.
+        test_func(self): Checks if the current user has access to edit the profile.
+        get_success_url(self): Returns the URL to redirect to after successful profile editing.
 
     """
     model = get_user_model()

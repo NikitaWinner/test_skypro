@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
+  <div class="container">
+    <h1 class="mt-5">Отчёты о результатах проверки</h1>
+    {% if code_checks %}
+    <table class="table mt-3">
+      <thead>
+        <tr>
+          <th scope="col">Имя файла</th>
+          <th scope="col">Статус проверки</th>
+          <th scope="col">Отправка отчёта</th>
+          <th scope="col">Подробные результаты проверки</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for code_check in code_checks %}
+          <tr>
+            <td>{{ code_check.file_name.file_name }}</td>
+            <td>{{ code_check.get_status_display }}</td>
+            <td>{% if code_check.is_sent %}Отправлен{% else %}Нет{% endif %}</td>
+            <td>
+              <button class="show-details btn btn-outline-secondary btn-sm">Показать</button>
+              <div class="details" style="display: none;">
+                {% if code_check.result %}
+                  {{ code_check.result|parse_json|linebreaks }}
+                {% else %}
+                  Нет результатов
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <h3>У вас пока нет отчётов:(</h3>
+    {% endif %}
+  </div>
+  <script>
+    document.querySelectorAll('.show-details').forEach(function(button) {
+      button.addEventListener('click', function() {
+        var details = this.nextElementSibling;
+        if (details.style.display === 'none' || details.style.display === '') {
+          details.style.display = 'block';
+          this.textContent = 'Скрыть';
+        } else {
+          details.style.display = 'none';
+          this.textContent = 'Показать';
+        }
+      });
+    });
+  </script>
+{% endblock %}

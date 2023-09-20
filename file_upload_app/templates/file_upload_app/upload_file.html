@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Загрузка файла
+{% endblock title %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="container">
+    <h2>Загрузка файла</h2>
+    <form method="post" enctype="multipart/form-data" class="form-horizontal">
+        {% csrf_token %}
+        {% crispy form %}
+    </form>
+</div>
+{% endblock content %}

@@ -6,23 +6,22 @@ from django.contrib.auth.forms import AuthenticationForm
 
 class CustomUserCreationForm(UserCreationForm):
     """
-    Форма для создания пользовательской учетной записи (регистрации).
+    Form for creating a custom user account (registration).
 
-    Это настраиваемая форма для регистрации пользователей, которая
-    включает в себя поле для ввода email вместо стандартного поля
-    для ввода имени пользователя (username).
+    This is a customizable user registration form that includes an email
+    input field instead of the default username input field.
 
     Attributes:
-        email (forms.EmailField): Поле для ввода email.
-        field_order (list): Порядок полей в форме.
+        email (forms.EmailField): Field for entering an email address.
+        field_order (list): The order of fields in the form.
 
     Meta:
-        model (Model): Модель пользователя, используемая в проекте.
-        fields (tuple): Поля, которые включены в форму (email, password1, password2).
+        model (Model): The user model used in the project.
+        fields (tuple): Fields included in the form (email, password1, password2).
 
     """
-    email = forms.EmailField(required=True)
-    field_order = [
+    email: forms.EmailField = forms.EmailField(required=True)
+    field_order: list = [
         "email",
         "password1",
         "password2",
@@ -39,13 +38,13 @@ class CustomUserCreationForm(UserCreationForm):
 
 class CustomUserChangeForm(forms.ModelForm):
     """
-    Форма для изменения данных пользовательской учетной записи.
+    Form for changing user account data.
 
-    Эта форма позволяет пользователям изменять свой email.
+    This form allows users to change their email address.
 
     Meta:
-        model (Model): Модель пользователя, используемая в проекте.
-        fields (tuple): Поля, которые можно изменять (email).
+        model (Model): The user model used in the project.
+        fields (tuple): Fields that can be changed (email).
 
     """
 
@@ -58,26 +57,26 @@ class CustomUserChangeForm(forms.ModelForm):
 
 class CustomAuthenticationForm(AuthenticationForm):
     """
-    Форма аутентификации (логина) пользователей.
+    Form for authenticating (logging in) users.
 
-    Эта форма расширяет стандартную форму аутентификации `AuthenticationForm`,
-    добавляя поле для ввода email вместо стандартного поля для ввода имени
-    пользователя (username).
+    This form extends the standard `AuthenticationForm` with an email input
+    field instead of the default username input field.
 
     Attributes:
-        email (forms.EmailField): Поле для ввода email.
-        password (forms.CharField): Поле для ввода пароля.
+        email (forms.EmailField): Field for entering an email address.
+        password (forms.CharField): Field for entering a password.
 
     """
-    email = forms.EmailField(
+    email: forms.EmailField = forms.EmailField(
         widget=forms.TextInput(attrs={'class': 'form-control', 'autofocus': True, 'autocomplete': 'email'}),
         label="Email"
     )
-    password = forms.CharField(
+    password: forms.CharField = forms.CharField(
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'autocomplete': 'current-password'}),
         strip=False,
-        label="Пароль"
+        label="Password"
     )
+    field_order: list = ['email', 'password']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

@@ -6,32 +6,32 @@ from django.utils.translation import gettext_lazy as _
 
 class UserManager(BaseUserManager):
     """
-    Менеджер пользователей для модели CustomUser.
+    Custom user manager for the CustomUser model.
 
-    UserManager - это пользовательский менеджер, который предоставляет методы для
-    создания и управления пользователями.
+    UserManager is a custom manager that provides methods for
+    creating and managing users.
 
     Methods:
-        create_user(self, email: str, password: str = None, **extra_fields) -> CustomUser: Создает и сохраняет пользователя с заданными параметрами.
-        create_superuser(self, email: str, password: str = None, **extra_fields) -> CustomUser: Создает и сохраняет суперпользователя с заданными параметрами.
-
+        create_user(self, email: str, password: str = None, **extra_fields) -> 'CustomUser':
+            Creates and saves a user with the given parameters.
+        create_superuser(self, email: str, password: str = None, **extra_fields) -> 'CustomUser':
+            Creates and saves a superuser with the given parameters.
     """
 
     def create_user(self, email: str, password: str = None, **extra_fields) -> 'CustomUser':
         """
-        Создает и сохраняет пользователя с заданными параметрами.
+        Create and save a user with the given parameters.
 
         Args:
-            email (str): Email пользователя.
-            password (str): Пароль пользователя.
-            **extra_fields (dict): Дополнительные поля пользователя.
+            email (str): User's email.
+            password (str): User's password.
+            **extra_fields (dict): Additional user fields.
 
         Returns:
-            CustomUser: Созданный пользователь.
+            CustomUser: Created user.
 
         Raises:
-            ValueError: Если не указан email.
-
+            ValueError: If email is not provided.
         """
         if not email:
             raise ValueError(_('The Email field must be set'))
@@ -44,16 +44,15 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, email: str, password: str = None, **extra_fields) -> 'CustomUser':
         """
-        Создает и сохраняет суперпользователя с заданными параметрами.
+        Create and save a superuser with the given parameters.
 
         Args:
-            email (str): Email суперпользователя.
-            password (str): Пароль суперпользователя.
-            **extra_fields (dict): Дополнительные поля суперпользователя.
+            email (str): Superuser's email.
+            password (str): Superuser's password.
+            **extra_fields (dict): Additional superuser fields.
 
         Returns:
-            CustomUser: Созданный суперпользователь.
-
+            CustomUser: Created superuser.
         """
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
@@ -62,21 +61,22 @@ class UserManager(BaseUserManager):
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     """
-    Пользовательская модель пользователя.
+    Custom user model.
 
-    Модель CustomUser представляет собой пользовательскую модель, которая
-    наследует AbstractBaseUser и PermissionsMixin. Она используется для создания
-    пользователей с уникальным email вместо стандартного username.
+    CustomUser model represents a custom user model that
+    inherits AbstractBaseUser and PermissionsMixin. It is
+    used to create users with unique emails instead of
+    standard usernames.
 
     Attributes:
-        email (str): Email пользователя.
-        is_staff (bool): Показывает, является ли пользователь сотрудником.
-        is_active (bool): Показывает, активен ли пользователь.
-        date_joined (datetime): Дата и время регистрации пользователя.
+        email (str): User's email.
+        is_staff (bool): Indicates whether the user is a staff member.
+        is_active (bool): Indicates whether the user is active.
+        date_joined (datetime): Date and time of user registration.
 
     Methods:
-        email_user(self, subject: str, message: str, from_email: str = None, **kwargs): Отправляет email пользователю.
-
+        email_user(self, subject: str, message: str, from_email: str = None, **kwargs):
+            Sends an email to the user.
     """
 
     email = models.EmailField(
@@ -114,13 +114,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def email_user(self, subject: str, message: str, from_email: str = None, **kwargs):
         """
-        Отправляет email пользователю.
+        Sends an email to the user.
 
         Args:
-            subject (str): Заголовок сообщения.
-            message (str): Текст сообщения.
-            from_email (str, optional): Email отправителя.
-            **kwargs: Дополнительные аргументы для send_mail.
-
+            subject (str): Email subject.
+            message (str): Email message text.
+            from_email (str, optional): Sender's email.
+            **kwargs: Additional arguments for send_mail.
         """
         send_mail(subject, message, from_email, [self.email], **kwargs)

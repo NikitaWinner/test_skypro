@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <h1 class="mt-5">Мои файлы</h1>
+    {% if files %}
+    <table class="table mt-3">
+      <thead>
+        <tr>
+          <th scope="col">Имя файла</th>
+          <th scope="col">Описание</th>
+          <th scope="col">Действие</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for file in files %}
+          <tr>
+            <td>{{ file.file_name }}</td>
+            <td>{{ file.description }}</td>
+            <td>
+              <a class="btn btn-danger btn-sm" href="{% url 'file_upload_app:delete_file' file.id %}">Удалить</a>
+              <a class="btn btn-primary btn-sm" href="{% url 'file_upload_app:overwrite_file' file.id %}">Обновить</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <h3>У вас пока нет загруженных файлов :(</h3>
+    {% endif %}
+  </div>
+{% endblock %}

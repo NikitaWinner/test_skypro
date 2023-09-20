@@ -1,0 +1,82 @@
+version: "3.8"
+
+services:
+
+  # Сервис базы данных PostgreSQL
+  db:
+    image: postgres:15.2-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    ports:
+      - "5433:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data/
+
+  # Сервис миграций Django
+  run_migrations:
+    build: .
+    env_file: .env
+    environment:
+      DB_HOST: db
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["python", "manage.py", "migrate"]
+
+  # Сервис Django API
+  api:
+    build: .
+    env_file: .env
+    environment:
+      DB_HOST: db
+    depends_on:
+      db:
+        condition: service_healthy
+      run_migrations:
+        condition: service_completed_successfully
+    ports:
+      - "8000:8000"
+
+  # Сервис Redis
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
+  # Сервис Celery
+  celery:
+    build: .
+    env_file: .env
+    environment:
+      DB_HOST: db
+      REDIS_HOST: redis
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: ["celery", "worker", "--app=config.celery:app"]
+
+  # Сервис Celery Beat
+  celery-beat:
+    build: .
+    env_file: .env
+    environment:
+      DB_HOST: db
+      REDIS_HOST: redis
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: [ "celery", "beat", "--app=config.celery:app" ]
+
+volumes:
+  pg_data:

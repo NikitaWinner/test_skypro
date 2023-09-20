@@ -3,10 +3,10 @@
 {% block content %}
 {% include 'includes/messages.html' %}
   <div class="text-center">
-      <div class="container-lg content-container mb-5">
+      <div class="container-lg mb-5">
     <h2>Вход пользователя</h2>
     {% load crispy_forms_tags %}
-    <div class="mb-5"> <!-- Добавляем контейнер с отступом снизу -->
+    <div class="mb-5">
       <form method="POST" action="{% url 'authentication_app:login' %}" class="mx-auto col-md-6">
           {% csrf_token %}
           {{ form|crispy }}
@@ -15,7 +15,7 @@
               <button type="submit" class="btn btn-primary btn-block">Войти</button>
           </p>
       </form>
-    </div> <!-- Закрываем контейнер с отступом снизу -->
+    </div>
     <div class="row justify-content-between">
       <div class="col">
         <a href="{% url 'authentication_app:register' %}" class="btn btn-outline-primary btn-sm"><small>Регистрация</small></a>
@@ -31,7 +31,7 @@
 
       {% if messages %}
       // Toasts
-      $(".toast").toast({ delay: 4000 });
+      $(".toast").toast({ delay: 3000 });
       $(".toast").toast("show");
       {% endif %}
 

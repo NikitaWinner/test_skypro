@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    {% load crispy_forms_tags %}
+    <h1 class="mt-5">Обновление файла</h1>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <input type="submit" class="btn btn-primary" value="Загрузить">
+    </form>
+    <a class="btn btn-secondary" href="{% url 'file_upload_app:my_files' %}">Назад</a>
+  </div>
+{% endblock %}

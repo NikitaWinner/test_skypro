@@ -8,7 +8,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', RedirectView.as_view(url="home/")),
     path('home/', include('authentication_app.urls', namespace='authentication_app')),
-    path('api/v1/', include('authentication_app.api.urls')),
+    path('files/', include('file_upload_app.urls', namespace='file_upload_app')),
+    path('reports/', include('reports_app.urls', namespace='reports_app')),
+    path('api/v1/auth/', include('authentication_app.api.urls')),
+    path('api/v1/get/', include('file_upload_app.api.urls')),
+    path('api/v1/check/', include('code_verification_app.api.urls')),
 ]
 
 if settings.DEBUG:

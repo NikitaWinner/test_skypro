@@ -5,20 +5,20 @@ from authentication_app.models import CustomUser
 
 class CustomUserSerializer(serializers.ModelSerializer):
     """
-    Сериализатор для модели CustomUser.
+    Serializer for the CustomUser model.
     """
 
     class Meta:
         model = CustomUser
-        # Поля, которые будут включены в сериализацию
+
         fields = ('id', 'email', 'password', 'is_staff', 'is_active', 'date_joined')
-        # Поля, которые будут только для чтения (не могут быть изменены через API)
+
         read_only_fields = ('id', 'is_staff', 'is_active', 'date_joined')
 
 
 class AuthTokenSerializer(serializers.Serializer):
     """
-    Сериализатор для аутентификации (логина) пользователя.
+    Serializer for authenticating (logging in) a user.
     """
 
     email = serializers.EmailField()
@@ -27,19 +27,19 @@ class AuthTokenSerializer(serializers.Serializer):
 
     def validate(self, attrs):
         """
-        Валидация email и пароля пользователя.
+        Validate the user's email and password.
 
-        Проверяет введенный email и пароль пользователя на корректность.
-        Если аутентификация успешна, возвращает атрибут 'user' с пользователем.
+        Checks the entered email and password for correctness.
+        If authentication is successful, returns the 'user' attribute with the user.
 
         Args:
-            attrs (dict): Словарь атрибутов, включая email и password.
+            attrs (dict): A dictionary of attributes including email and password.
 
         Returns:
-            dict: Словарь атрибутов с пользователем, если аутентификация успешна.
+            dict: A dictionary of attributes with the user if authentication is successful.
 
         Raises:
-            serializers.ValidationError: Если аутентификация не удалась или email и/или пароль не предоставлены.
+            serializers.ValidationError: If authentication fails or if email and/or password are not provided.
         """
         email = attrs.get('email')
         password = attrs.get('password')

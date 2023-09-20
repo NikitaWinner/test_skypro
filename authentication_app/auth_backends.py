@@ -1,35 +1,37 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import ModelBackend
+from typing import Optional, Union
+
+from django.contrib.auth.models import User
 
 
 class EmailBackend(ModelBackend):
     """
-    Аутентификация пользователя по email с использованием кастомного бэкенда.
+    Authenticate users by email using a custom backend.
 
-    Класс EmailBackend предоставляет кастомный бэкенд для аутентификации
-    пользователей по email.
+    The EmailBackend class provides a custom backend for authenticating users by email.
 
     Methods:
-        authenticate(self, request, username=None, password=None, **kwargs):
-            Проверяет введенный email и пароль пользователя на корректность и
-            возвращает пользователя, если аутентификация успешна.
+        authenticate(self, request, username: Optional[str] = None, password: Optional[str] = None, **kwargs) -> Union[User, None]:
+            Verify the entered email and password for correctness and return the user if authentication is successful.
 
     """
 
-    def authenticate(self, request, username=None, password=None, **kwargs):
+    def authenticate(self, request, username: Optional[str] = None, password: Optional[str] = None, **kwargs) -> Union[
+        User, None]:
         """
-        Аутентификация пользователя по email и паролю.
+        Authenticate a user by email and password.
 
-        Попытка аутентификации пользователя по предоставленному email и паролю.
+        Attempt to authenticate a user based on the provided email and password.
 
         Args:
-            request: Объект запроса пользователя.
-            username (str): Имя пользователя (email).
-            password (str): Пароль пользователя.
-            **kwargs: Дополнительные аргументы (не используются в данном методе).
+            request: The user's request object.
+            username (str): The user's username (email).
+            password (str): The user's password.
+            **kwargs: Additional arguments (not used in this method).
 
         Returns:
-            User: Объект пользователя, если аутентификация успешна, в противном случае None.
+            User: A user object if authentication is successful, or None otherwise.
 
         """
         UserModel = get_user_model()
